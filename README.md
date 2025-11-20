@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# Nebula: Zen Focus & Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Nebula is a modern, minimalist productivity application designed to help you stay focused and organized. Built with a beautiful glassmorphism UI, it combines a flexible Pomodoro timer with robust task management and analytics.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### ⏱️ Zen Focus Timer
+- **Multiple Modes**: Switch effortlessly between **Focus** (25m), **Short Break** (5m), and **Long Break** (15m).
+- **Customizable**: Adjust durations for each mode in the settings to fit your workflow.
+- **Visual & Audio Feedback**: Dynamic progress ring and gentle sound notifications upon completion.
 
-## React Compiler
+### 📝 Advanced Task Management
+- **Organize**: Add tasks with categories (Work, Personal, Urgent, Other).
+- **Prioritize**: Drag and drop tasks to reorder them based on priority.
+- **Track**: Mark tasks as complete and clear finished items with a single click.
+- **Persistent**: Tasks are saved automatically so you never lose your list.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🎨 Enhanced Theming
+- **5 Beautiful Themes**: Choose from **Nebula** (Default), **Sunset**, **Forest**, **Ocean**, and **Midnight**.
+- **Global Reskinning**: Themes instantly update the entire application's color palette, backgrounds, and glass panels.
+- **Optimized Readability**: All themes are tuned for maximum text contrast and visual comfort.
 
-## Expanding the ESLint configuration
+### 📊 Analytics Dashboard
+- **Track Your Flow**: Monitor your daily progress with counters for **Sessions Completed** and **Total Focus Minutes**.
+- **Stay Motivated**: Watch your stats grow as you maintain your focus.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### ⚙️ Settings
+- **Personalize**: Configure timer durations and select your preferred theme from a visual grid.
+- **Sound Control**: Toggle sound effects on or off.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Framework**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Styling**: Vanilla CSS (Glassmorphism, CSS Variables, Animations)
+- **State Management**: React Context API + localStorage
+- **Drag & Drop**: @dnd-kit/core & @dnd-kit/sortable
+- **Icons**: Lucide React
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📦 Installation
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/nebula.git
+    ```
+2.  Navigate to the project directory:
+    ```bash
+    cd nebula
+    ```
+3.  Install dependencies:
+    ```bash
+    npm install
+    ```
+4.  Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🤝 Contributing
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
