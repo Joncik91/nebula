@@ -12,6 +12,21 @@ const Timer: React.FC = () => {
     const timerRef = useRef<number | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
+    const [sessionsSinceLongBreak, setSessionsSinceLongBreak] = useState(0);
+
+    // Request notification permission on mount
+    useEffect(() => {
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission();
+        }
+    }, []);
+
+    const sendNotification = (title: string, body: string) => {
+        if (Notification.permission === 'granted') {
+            new Notification(title, { body, icon: '/vite.svg' });
+        }
+    };
+
     // Update time when mode or settings change, but only if not active
     useEffect(() => {
         if (!isActive) {
@@ -22,6 +37,33 @@ const Timer: React.FC = () => {
     const playSound = () => {
         if (settings.soundEnabled && audioRef.current) {
             audioRef.current.play().catch(e => console.log('Audio play failed', e));
+        }
+    };
+
+    const handleTimerComplete = () => {
+        setIsActive(false);
+        playSound();
+
+        if (mode === 'focus') {
+            const newSessions = sessionsSinceLongBreak + 1;
+            setSessionsSinceLongBreak(newSessions);
+            incrementStats(settings.timerDurations.focus / 60);
+            sendNotification('Focus Session Complete!', 'Time for a break.');
+
+            // Auto-cycle logic
+            if (newSessions >= 4) {
+                switchMode('longBreak');
+                setSessionsSinceLongBreak(0);
+            } else {
+                switchMode('shortBreak');
+            }
+        } else {
+            sendNotification('Break Over!', 'Time to focus.');
+            switchMode('focus');
+        }
+
+        if (settings.autoStart) {
+            setIsActive(true);
         }
     };
 
@@ -80,21 +122,15 @@ const Timer: React.FC = () => {
             timerRef.current = window.setInterval(() => {
                 setTimeLeft((prevTime) => prevTime - 1);
             }, 1000);
-        } else if (timeLeft === 0) {
-            setIsActive(false);
+        } else if (timeLeft === 0 && isActive) {
             if (timerRef.current) clearInterval(timerRef.current);
-
-            // Timer finished
-            playSound();
-            if (mode === 'focus') {
-                incrementStats(settings.timerDurations.focus / 60);
-            }
+            handleTimerComplete();
         }
 
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [isActive, timeLeft, mode, settings.timerDurations, incrementStats]);
+    }, [isActive, timeLeft, mode, settings.timerDurations, incrementStats, settings.autoStart]);
 
     const toggleTimer = () => {
         setIsActive(!isActive);
@@ -112,7 +148,7 @@ const Timer: React.FC = () => {
     };
 
     return (
-        <div className="glass-panel flex-col flex-center" style={{ padding: '2rem', width: '100%', maxWidth: '400px' }}>
+        <div className="glass-panel flex-col flex-center" style={{ padding: '2rem', width: '100%', maxWidth: '500px' }}>
             <div className="mode-selector flex-center gap-4" style={{ marginBottom: '2rem' }}>
                 {(['focus', 'shortBreak', 'longBreak'] as TimerMode[]).map((m) => (
                     <button

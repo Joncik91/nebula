@@ -183,66 +183,80 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
         </div>
+      </div>
 
-        <div style={{ marginBottom: '2rem' }}>
-          <h3 style={{ marginBottom: '1rem', fontSize: '1rem', color: 'var(--color-text-muted)' }}>Theme</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
-            {themes.map((theme) => (
-              <button
-                key={theme.id}
-                onClick={() => setSelectedTheme(theme.id)}
-                title={theme.name}
-                aria-label={`Select ${theme.name} theme`}
-                style={{
-                  width: '45px',
-                  height: '45px',
-                  borderRadius: '50%',
-                  background: `linear-gradient(135deg, ${theme.colors.bgGradientStart}, ${theme.colors.bgGradientMid})`,
-                  border: selectedTheme === theme.id ? '2px solid #fff' : '2px solid rgba(255,255,255,0.2)',
-                  cursor: 'pointer',
-                  boxShadow: selectedTheme === theme.id ? '0 0 15px var(--color-accent)' : 'none',
-                  transition: 'all 0.2s ease',
-                  transform: selectedTheme === theme.id ? 'scale(1.1)' : 'scale(1)'
-                }}
-              />
-            ))}
-          </div>
+      <div style={{ marginBottom: '2rem' }}>
+        <h3 style={{ marginBottom: '1rem', fontSize: '1rem', color: 'var(--color-text-muted)' }}>Automation</h3>
+        <div className="flex-center" style={{ justifyContent: 'space-between' }}>
+          <label htmlFor="autoStart" style={{ cursor: 'pointer' }}>Auto-start Timer</label>
+          <input
+            id="autoStart"
+            type="checkbox"
+            checked={settings.autoStart}
+            onChange={(e) => updateSettings({ autoStart: e.target.checked })}
+            style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+          />
         </div>
+      </div>
 
-        <div style={{ marginBottom: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem' }}>
-          <h3 style={{ marginBottom: '1rem', fontSize: '1rem', color: 'var(--color-text-muted)' }}>Danger Zone</h3>
-          <button
-            onClick={handleReset}
-            style={{
-              background: 'rgba(255, 50, 50, 0.1)',
-              border: '1px solid rgba(255, 50, 50, 0.3)',
-              color: '#ff6b6b',
-              padding: '0.5rem 1rem',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              width: '100%'
-            }}
-          >
-            Reset to Defaults
-          </button>
+      <div style={{ marginBottom: '2rem' }}>
+        <h3 style={{ marginBottom: '1rem', fontSize: '1rem', color: 'var(--color-text-muted)' }}>Theme</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
+          {themes.map((theme) => (
+            <button
+              key={theme.id}
+              onClick={() => setSelectedTheme(theme.id)}
+              title={theme.name}
+              aria-label={`Select ${theme.name} theme`}
+              style={{
+                width: '45px',
+                height: '45px',
+                borderRadius: '50%',
+                background: `linear-gradient(135deg, ${theme.colors.bgGradientStart}, ${theme.colors.bgGradientMid})`,
+                border: selectedTheme === theme.id ? '2px solid #fff' : '2px solid rgba(255,255,255,0.2)',
+                cursor: 'pointer',
+                boxShadow: selectedTheme === theme.id ? '0 0 15px var(--color-accent)' : 'none',
+                transition: 'all 0.2s ease',
+                transform: selectedTheme === theme.id ? 'scale(1.1)' : 'scale(1)'
+              }}
+            />
+          ))}
         </div>
+      </div>
 
-        <div className="flex-center gap-4">
-          <button
-            className="glass-button"
-            onClick={onClose}
-            style={{ background: 'rgba(255,255,255,0.05)' }}
-          >
-            Cancel
-          </button>
-          <button
-            className="glass-button"
-            onClick={handleSave}
-            style={{ background: 'var(--color-primary)', color: '#fff' }}
-          >
-            Save Changes
-          </button>
-        </div>
+      <div style={{ marginBottom: '2rem', borderTop: '1px solid var(--glass-border)', paddingTop: '1rem' }}>
+        <h3 style={{ marginBottom: '1rem', fontSize: '1rem', color: 'var(--color-text-muted)' }}>Danger Zone</h3>
+        <button
+          onClick={handleReset}
+          style={{
+            background: 'rgba(255, 50, 50, 0.1)',
+            border: '1px solid rgba(255, 50, 50, 0.3)',
+            color: '#ff6b6b',
+            padding: '0.5rem 1rem',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            width: '100%'
+          }}
+        >
+          Reset to Defaults
+        </button>
+      </div>
+
+      <div className="flex-center gap-4">
+        <button
+          className="glass-button"
+          onClick={onClose}
+          style={{ background: 'rgba(255,255,255,0.05)' }}
+        >
+          Cancel
+        </button>
+        <button
+          className="glass-button"
+          onClick={handleSave}
+          style={{ background: 'var(--color-primary)', color: '#fff' }}
+        >
+          Save Changes
+        </button>
       </div>
     </div>
   );

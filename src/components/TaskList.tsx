@@ -38,7 +38,7 @@ const TaskList: React.FC = () => {
     };
 
     return (
-        <div style={{ width: '100%', maxWidth: '500px', marginTop: '2rem' }}>
+        <div style={{ width: '100%', maxWidth: '500px' }}>
             <form onSubmit={handleAddTask} style={{ marginBottom: '2rem' }}>
                 <div className="flex-col gap-4">
                     <div style={{ position: 'relative' }}>

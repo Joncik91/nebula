@@ -5,7 +5,7 @@ const Analytics: React.FC = () => {
     const { stats } = useNebula();
 
     return (
-        <div className="glass-panel" style={{ padding: '1.5rem', width: '100%', maxWidth: '500px', marginTop: '2rem' }}>
+        <div className="glass-panel" style={{ padding: '1.5rem', width: '100%', maxWidth: '500px' }}>
             <h3 style={{ marginBottom: '1rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>Daily Focus</h3>
             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                 <div className="flex-col flex-center">

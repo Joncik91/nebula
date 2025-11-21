@@ -12,6 +12,7 @@ export interface Settings {
     };
     themeId: string;
     soundEnabled: boolean;
+    autoStart: boolean;
 }
 
 export interface Stats {

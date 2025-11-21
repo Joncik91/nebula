@@ -19,6 +19,7 @@ const defaultSettings: Settings = {
     },
     themeId: 'nebula',
     soundEnabled: true,
+    autoStart: false,
 };
 
 const defaultStats: Stats = {
