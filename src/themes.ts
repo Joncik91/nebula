@@ -1,21 +1,4 @@
-export interface Theme {
-    id: string;
-    name: string;
-    colors: {
-        bgGradientStart: string;
-        bgGradientMid: string;
-        bgGradientEnd: string;
-        primary: string;
-        secondary: string;
-        accent: string;
-        textMain: string;
-        textMuted: string;
-        textDim: string;
-        glassBg: string;
-        glassBorder: string;
-        glassShadow: string;
-    };
-}
+import type { Theme } from './types';
 
 export const themes: Theme[] = [
     {

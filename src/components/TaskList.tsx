@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     DndContext,
     closestCenter,
@@ -6,30 +6,19 @@ import {
     PointerSensor,
     useSensor,
     useSensors,
-    type DragEndEvent
 } from '@dnd-kit/core';
 import {
-    arrayMove,
     SortableContext,
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import TaskItem from './TaskItem';
-
-interface Task {
-    id: string;
-    text: string;
-    completed: boolean;
-    category: string;
-}
+import { useTasks } from '../hooks/useTasks';
 
 const CATEGORIES = ['Work', 'Personal', 'Urgent', 'Other'];
 
 const TaskList: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>(() => {
-        const saved = localStorage.getItem('nebula-tasks');
-        return saved ? JSON.parse(saved) : [];
-    });
+    const { tasks, addTask, toggleTask, deleteTask, clearCompleted, handleDragEnd } = useTasks();
     const [newTask, setNewTask] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Work');
 
@@ -40,54 +29,17 @@ const TaskList: React.FC = () => {
         })
     );
 
-    useEffect(() => {
-        localStorage.setItem('nebula-tasks', JSON.stringify(tasks));
-    }, [tasks]);
-
-    const addTask = (e: React.FormEvent) => {
+    const handleAddTask = (e: React.FormEvent) => {
         e.preventDefault();
         if (!newTask.trim()) return;
 
-        const task: Task = {
-            id: Date.now().toString(),
-            text: newTask,
-            completed: false,
-            category: selectedCategory
-        };
-
-        setTasks([task, ...tasks]);
+        addTask(newTask, selectedCategory);
         setNewTask('');
-    };
-
-    const toggleTask = (id: string) => {
-        setTasks(tasks.map(t =>
-            t.id === id ? { ...t, completed: !t.completed } : t
-        ));
-    };
-
-    const deleteTask = (id: string) => {
-        setTasks(tasks.filter(t => t.id !== id));
-    };
-
-    const clearCompleted = () => {
-        setTasks(tasks.filter(t => !t.completed));
-    };
-
-    const handleDragEnd = (event: DragEndEvent) => {
-        const { active, over } = event;
-
-        if (over && active.id !== over.id) {
-            setTasks((items) => {
-                const oldIndex = items.findIndex((i) => i.id === active.id);
-                const newIndex = items.findIndex((i) => i.id === over.id);
-                return arrayMove(items, oldIndex, newIndex);
-            });
-        }
     };
 
     return (
         <div style={{ width: '100%', maxWidth: '500px', marginTop: '2rem' }}>
-            <form onSubmit={addTask} style={{ marginBottom: '2rem' }}>
+            <form onSubmit={handleAddTask} style={{ marginBottom: '2rem' }}>
                 <div className="flex-col gap-4">
                     <div style={{ position: 'relative' }}>
                         <input
@@ -109,6 +61,7 @@ const TaskList: React.FC = () => {
                                 fontWeight: 'bold',
                                 padding: '0.5rem'
                             }}
+                            aria-label="Add task"
                         >
                             +
                         </button>

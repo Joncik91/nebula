@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNebula, type TimerMode } from '../context/NebulaContext';
+import { useNebula } from '../context/NebulaContext';
+import type { TimerMode } from '../types';
 import { themes } from '../themes';
 
 interface SettingsModalProps {

@@ -1,22 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { themes, type Theme } from '../themes';
-
-export type TimerMode = 'focus' | 'shortBreak' | 'longBreak';
-
-interface Settings {
-    timerDurations: {
-        focus: number;
-        shortBreak: number;
-        longBreak: number;
-    };
-    themeId: string;
-    soundEnabled: boolean;
-}
-
-interface Stats {
-    sessionsCompleted: number;
-    totalMinutes: number;
-}
+import { themes } from '../themes';
+import type { Theme, Settings, Stats } from '../types';
+import { useTheme } from '../hooks/useTheme';
 
 interface NebulaContextType {
     settings: Settings;
@@ -45,50 +30,49 @@ const NebulaContext = createContext<NebulaContextType | undefined>(undefined);
 
 export const NebulaProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [settings, setSettings] = useState<Settings>(() => {
-        const saved = localStorage.getItem('nebula-settings');
-        const parsed = saved ? JSON.parse(saved) : {};
+        try {
+            const saved = localStorage.getItem('nebula-settings');
+            if (!saved) return defaultSettings;
 
-        // Migration: If themeColor exists but themeId doesn't, default to 'nebula'
-        // We ignore the old color value as we are moving to presets
-        const themeId = parsed.themeId || 'nebula';
+            const parsed = JSON.parse(saved);
 
-        return {
-            ...defaultSettings,
-            ...parsed,
-            themeId,
-            timerDurations: {
-                ...defaultSettings.timerDurations,
-                ...(parsed.timerDurations || {})
-            }
-        };
+            // Migration: If themeColor exists but themeId doesn't, default to 'nebula'
+            const themeId = parsed.themeId || 'nebula';
+
+            return {
+                ...defaultSettings,
+                ...parsed,
+                themeId,
+                timerDurations: {
+                    ...defaultSettings.timerDurations,
+                    ...(parsed.timerDurations || {})
+                }
+            };
+        } catch (error) {
+            console.error('Failed to parse settings from localStorage:', error);
+            localStorage.removeItem('nebula-settings');
+            return defaultSettings;
+        }
     });
 
     const [stats, setStats] = useState<Stats>(() => {
-        const saved = localStorage.getItem('nebula-stats');
-        return saved ? JSON.parse(saved) : defaultStats;
+        try {
+            const saved = localStorage.getItem('nebula-stats');
+            return saved ? JSON.parse(saved) : defaultStats;
+        } catch (error) {
+            console.error('Failed to parse stats from localStorage:', error);
+            localStorage.removeItem('nebula-stats');
+            return defaultStats;
+        }
     });
 
     const currentTheme = themes.find(t => t.id === settings.themeId) || themes[0];
 
+    useTheme(currentTheme);
+
     useEffect(() => {
         localStorage.setItem('nebula-settings', JSON.stringify(settings));
-
-        // Apply theme variables
-        const root = document.documentElement;
-        root.style.setProperty('--color-bg-gradient-start', currentTheme.colors.bgGradientStart);
-        root.style.setProperty('--color-bg-gradient-mid', currentTheme.colors.bgGradientMid);
-        root.style.setProperty('--color-bg-gradient-end', currentTheme.colors.bgGradientEnd);
-        root.style.setProperty('--color-primary', currentTheme.colors.primary);
-        root.style.setProperty('--color-secondary', currentTheme.colors.secondary);
-        root.style.setProperty('--color-accent', currentTheme.colors.accent);
-        root.style.setProperty('--color-text-main', currentTheme.colors.textMain);
-        root.style.setProperty('--color-text-muted', currentTheme.colors.textMuted);
-        root.style.setProperty('--color-text-dim', currentTheme.colors.textDim);
-        root.style.setProperty('--glass-bg', currentTheme.colors.glassBg);
-        root.style.setProperty('--glass-border', currentTheme.colors.glassBorder);
-        root.style.setProperty('--glass-shadow', currentTheme.colors.glassShadow);
-
-    }, [settings, currentTheme]);
+    }, [settings]);
 
     useEffect(() => {
         localStorage.setItem('nebula-stats', JSON.stringify(stats));

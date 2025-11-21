@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNebula, type TimerMode } from '../context/NebulaContext';
+import { useNebula } from '../context/NebulaContext';
+import type { TimerMode } from '../types';
 
 const FULL_DASH_ARRAY = 283;
 
@@ -42,6 +43,37 @@ const Timer: React.FC = () => {
         ).toFixed(0)} 283`;
         return circleDasharray;
     };
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Ignore if user is typing in an input
+            if (document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement) {
+                return;
+            }
+
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    toggleTimer();
+                    break;
+                case 'KeyR':
+                    resetTimer();
+                    break;
+                case 'KeyF':
+                    switchMode('focus');
+                    break;
+                case 'KeyS':
+                    switchMode('shortBreak');
+                    break;
+                case 'KeyL':
+                    switchMode('longBreak');
+                    break;
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isActive, mode, settings.timerDurations]); // Dependencies for toggle/reset/switch logic
 
     useEffect(() => {
         if (isActive && timeLeft > 0) {
@@ -146,10 +178,10 @@ const Timer: React.FC = () => {
             </div>
 
             <div className="controls flex-center gap-4" style={{ marginTop: '2rem' }}>
-                <button className="glass-button" onClick={toggleTimer}>
+                <button className="glass-button" onClick={toggleTimer} aria-label={isActive ? 'Pause timer' : 'Start timer'}>
                     {isActive ? 'Pause' : 'Start'}
                 </button>
-                <button className="glass-button" onClick={resetTimer}>
+                <button className="glass-button" onClick={resetTimer} aria-label="Reset timer">
                     Reset
                 </button>
             </div>
