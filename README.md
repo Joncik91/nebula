@@ -15,10 +15,15 @@ Nebula is a modern, minimalist productivity application designed to help you sta
 - **Track**: Mark tasks as complete and clear finished items with a single click.
 - **Persistent**: Tasks are saved automatically so you never lose your list.
 
-### 🎨 Enhanced Theming
-- **5 Beautiful Themes**: Choose from **Nebula** (Default), **Sunset**, **Forest**, **Ocean**, and **Midnight**.
-- **Global Reskinning**: Themes instantly update the entire application's color palette, backgrounds, and glass panels.
-- **Optimized Readability**: All themes are tuned for maximum text contrast and visual comfort.
+### 📱 Responsive Dashboard
+- **Adaptive Layout**: A smart grid system that shifts from a focused mobile view to a spacious 3-column dashboard on desktop.
+- **Hero Timer**: The timer takes center stage, providing a clear focal point for your sessions.
+- **Mobile Optimized**: Touch-friendly targets and optimized spacing for on-the-go productivity.
+
+### 🎨 Zen Theming
+- **5 Curated Themes**: Choose from **Nebula**, **Sunset**, **Forest**, **Ocean**, and **Midnight**.
+- **Subtle Ambience**: Deep, rich color palettes and ultra-slow background animations (60s cycle) create a calming, non-distracting environment.
+- **Glassmorphism**: Premium glass panels with refined blur and transparency effects.
 
 ### 📊 Analytics Dashboard
 - **Track Your Flow**: Monitor your daily progress with counters for **Sessions Completed** and **Total Focus Minutes**.
