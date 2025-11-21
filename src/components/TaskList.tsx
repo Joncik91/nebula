@@ -67,7 +67,7 @@ const TaskList: React.FC = () => {
                         </button>
                     </div>
 
-                    <div className="flex-center gap-4" style={{ justifyContent: 'flex-start' }}>
+                    <div className="flex-center gap-4" style={{ flexWrap: 'wrap' }}>
                         {CATEGORIES.map(cat => (
                             <button
                                 key={cat}

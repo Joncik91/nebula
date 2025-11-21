@@ -30,7 +30,7 @@ body {
   font-family: var(--font-family-main);
   background: linear-gradient(135deg, var(--color-bg-gradient-start), var(--color-bg-gradient-mid), var(--color-bg-gradient-end));
   background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  animation: gradientBG 60s ease infinite;
   color: var(--color-text-main);
   min-height: 100vh;
   overflow-x: hidden;

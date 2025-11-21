@@ -121,7 +121,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
           padding: '2rem',
           maxHeight: '90vh',
           overflowY: 'auto',
-          position: 'relative'
+          position: 'relative',
+          background: 'rgba(30, 30, 40, 0.85)', // Neutral dark background
+          border: '1px solid rgba(255, 255, 255, 0.1)'
         }}
         role="dialog"
         aria-modal="true"
