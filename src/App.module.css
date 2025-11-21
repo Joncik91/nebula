@@ -5,7 +5,7 @@
 }
 
 .settingsButton {
-    position: absolute;
+    position: fixed;
     top: 2rem;
     right: 2rem;
     background: transparent;
@@ -14,6 +14,7 @@
     cursor: pointer;
     border: none;
     transition: color 0.3s ease;
+    z-index: 100;
 }
 
 .settingsButton:hover {
@@ -25,6 +26,22 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     font-size: 0.8rem;
+    text-align: center;
+    width: 100%;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    color: var(--color-text-muted);
+    font-size: 1rem;
 }
 
 .main {
@@ -37,4 +54,5 @@
     padding-top: 3rem;
     color: var(--color-text-dim);
     font-size: 0.8rem;
+    text-align: center;
 }
